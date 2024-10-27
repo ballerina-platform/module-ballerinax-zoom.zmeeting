@@ -215,11 +215,11 @@ public isolated client class Client {
         return self.clientEp->delete(resourcePath, headers = httpHeaders);
     }
 
-    # Delete meeting recordings
+    # Delete meeting or webinar recordings
     #
-    # + meetingId - To get Cloud Recordings of a meeting, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID,the response will be for the latest meeting instance. 
-    # To get Cloud Recordings of a webinar, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID,the response will be for the latest webinar instance. 
-    # If a UUID starts with &quot;/&quot; or contains &quot;//&quot; (example: &quot;/ajXp112QmuoKj4854875==&quot;), you must **[double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid)** the UUID before making an API request. 
+    # + meetingId - To get a meeting's cloud recordings, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID, the response will be for the latest meeting instance. 
+    # To get a webinar's cloud recordings, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID, the response will be for the latest webinar instance. 
+    # If a UUID starts with `/` or contains `//`, like `/ajXp112QmuoKj4854875==`, you must **double encode** the UUID before making an API request. 
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Recordings deleted.  **Error Code:** `200`    You do not have the right permission. 
@@ -306,7 +306,7 @@ public isolated client class Client {
     # + tspId - TSP account ID.
     # + headers - Headers to be sent with the request 
     # + return - **Status Code:** `204` **No Content**   TSP account deleted. 
-    resource isolated function delete users/[userId_4 userId]/tsp/["1"|"2" tspId](map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function delete users/[UserId4 userId]/tsp/["1"|"2" tspId](map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/users/${getEncodedUri(userId)}/tsp/${getEncodedUri(tspId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -467,7 +467,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`     Archived files returned. 
-    resource isolated function get archive_files(map<string|string[]> headers = {}, *ListArchivedFilesQueries queries) returns inline_response_200|error {
+    resource isolated function get archive_files(map<string|string[]> headers = {}, *ListArchivedFilesQueries queries) returns InlineResponse200|error {
         string resourcePath = string `/archive_files`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -483,7 +483,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`     The statistics of Archived files returned. 
-    resource isolated function get archive_files/statistics(map<string|string[]> headers = {}, *GetArchivedFileStatisticsQueries queries) returns inline_response_200_1|error {
+    resource isolated function get archive_files/statistics(map<string|string[]> headers = {}, *GetArchivedFileStatisticsQueries queries) returns InlineResponse2001|error {
         string resourcePath = string `/archive_files/statistics`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -499,7 +499,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   Device detail returned successfully. 
-    resource isolated function get devices(map<string|string[]> headers = {}, *ListDevicesQueries queries) returns inline_response_200_7|error {
+    resource isolated function get devices(map<string|string[]> headers = {}, *ListDevicesQueries queries) returns InlineResponse2007|error {
         string resourcePath = string `/devices`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -515,7 +515,7 @@ public isolated client class Client {
     # + deviceId - The device's unique identifier.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**  Device detail returned successfully. 
-    resource isolated function get devices/[string deviceId](map<string|string[]> headers = {}) returns inline_response_200_10|error {
+    resource isolated function get devices/[string deviceId](map<string|string[]> headers = {}) returns InlineResponse20010|error {
         string resourcePath = string `/devices/${getEncodedUri(deviceId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -530,7 +530,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**  Version detail returned successfully. 
-    resource isolated function get devices/groups(map<string|string[]> headers = {}, *GetzdmgroupinfoQueries queries) returns inline_response_200_8|error {
+    resource isolated function get devices/groups(map<string|string[]> headers = {}, *GetzdmgroupinfoQueries queries) returns InlineResponse2008|error {
         string resourcePath = string `/devices/groups`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -546,7 +546,7 @@ public isolated client class Client {
     # + zdmGroupId - The Zoom Device Management (ZDM) group ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**  Version detail returned successfully. 
-    resource isolated function get devices/zpa/zdm_groups/[string zdmGroupId]/versions(map<string|string[]> headers = {}) returns inline_response_200_9|error {
+    resource isolated function get devices/zpa/zdm_groups/[string zdmGroupId]/versions(map<string|string[]> headers = {}) returns InlineResponse2009|error {
         string resourcePath = string `/devices/zpa/zdm_groups/${getEncodedUri(zdmGroupId)}/versions`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -561,7 +561,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   List of H.323/SIP devices returned.   **Error Code:** `200`   No permission. 
-    resource isolated function get h323/devices(map<string|string[]> headers = {}, *DeviceListQueries queries) returns json|error {
+    resource isolated function get h323/devices(map<string|string[]> headers = {}, *DeviceListQueries queries) returns H323SIPDeviceList|error {
         string resourcePath = string `/h323/devices`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -579,7 +579,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Meeting object returned. 
-    resource isolated function get meetings/[int meetingId](map<string|string[]> headers = {}, *MeetingQueries queries) returns inline_response_200_12|error {
+    resource isolated function get meetings/[int meetingId](map<string|string[]> headers = {}, *MeetingQueries queries) returns InlineResponse20012|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -596,7 +596,7 @@ public isolated client class Client {
     # When storing this value in your database, you must store it as a long format integer and **not** an integer. Meeting IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Meeting invitation returned. 
-    resource isolated function get meetings/[int meetingId]/invitation(map<string|string[]> headers = {}) returns Meeting\ Invitation|error {
+    resource isolated function get meetings/[int meetingId]/invitation(map<string|string[]> headers = {}) returns MeetingInvitation|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/invitation`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -612,7 +612,7 @@ public isolated client class Client {
     # When storing this value in your database, you must store it as a long format integer and **not** an integer. Meeting IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Meeting live streaming token returned. 
-    resource isolated function get meetings/[int meetingId]/jointoken/live_streaming(map<string|string[]> headers = {}) returns inline_response_200_13|error {
+    resource isolated function get meetings/[int meetingId]/jointoken/live_streaming(map<string|string[]> headers = {}) returns InlineResponse20013|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/jointoken/live_streaming`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -628,7 +628,7 @@ public isolated client class Client {
     # When storing this value in your database, you must store it as a long format integer and **not** an integer. Meeting IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Meeting local archiving token returned. 
-    resource isolated function get meetings/[int meetingId]/jointoken/local_archiving(map<string|string[]> headers = {}) returns inline_response_200_14|error {
+    resource isolated function get meetings/[int meetingId]/jointoken/local_archiving(map<string|string[]> headers = {}) returns InlineResponse20014|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/jointoken/local_archiving`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -645,7 +645,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Meeting local recording token returned. 
-    resource isolated function get meetings/[int meetingId]/jointoken/local_recording(map<string|string[]> headers = {}, *MeetingLocalRecordingJoinTokenQueries queries) returns inline_response_200_15|error {
+    resource isolated function get meetings/[int meetingId]/jointoken/local_recording(map<string|string[]> headers = {}, *MeetingLocalRecordingJoinTokenQueries queries) returns InlineResponse20015|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/jointoken/local_recording`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -663,7 +663,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:**    List polls of a Meeting  returned 
-    resource isolated function get meetings/[int meetingId]/polls(map<string|string[]> headers = {}, *MeetingPollsQueries queries) returns Poll\ List|error {
+    resource isolated function get meetings/[int meetingId]/polls(map<string|string[]> headers = {}, *MeetingPollsQueries queries) returns PollList|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/polls`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -681,7 +681,7 @@ public isolated client class Client {
     # + pollId - The poll ID
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Meeting Poll object returned 
-    resource isolated function get meetings/[int meetingId]/polls/[string pollId](map<string|string[]> headers = {}) returns inline_response_200_17|error {
+    resource isolated function get meetings/[int meetingId]/polls/[string pollId](map<string|string[]> headers = {}) returns InlineResponse20017|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/polls/${getEncodedUri(pollId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -698,7 +698,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`     Registrants returned. 
-    resource isolated function get meetings/[int meetingId]/recordings/registrants(map<string|string[]> headers = {}, *MeetingRecordingRegistrantsQueries queries) returns Meeting\ Cloud\ Recording\ Registration|error {
+    resource isolated function get meetings/[int meetingId]/recordings/registrants(map<string|string[]> headers = {}, *MeetingRecordingRegistrantsQueries queries) returns MeetingCloudRecordingRegistration|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings/registrants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -716,7 +716,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Successfully listed meeting registrants. 
-    resource isolated function get meetings/[int meetingId]/registrants(map<string|string[]> headers = {}, *MeetingRegistrantsQueries queries) returns Registration\ List|error {
+    resource isolated function get meetings/[int meetingId]/registrants(map<string|string[]> headers = {}, *MeetingRegistrantsQueries queries) returns RegistrationList|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/registrants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -734,7 +734,7 @@ public isolated client class Client {
     # + registrantId - The registrant ID.
     # + headers - Headers to be sent with the request 
     # + return - Success. 
-    resource isolated function get meetings/[int meetingId]/registrants/[string registrantId](map<string|string[]> headers = {}) returns Meeting\ Registrant|error {
+    resource isolated function get meetings/[int meetingId]/registrants/[string registrantId](map<string|string[]> headers = {}) returns MeetingRegistrant|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/registrants/${getEncodedUri(registrantId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -750,7 +750,7 @@ public isolated client class Client {
     # When storing this value in your database, you must store it as a long format integer and **not** an integer. Meeting IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Meeting Registrant Question object returned 
-    resource isolated function get meetings/[int meetingId]/registrants/questions(map<string|string[]> headers = {}) returns inline_response_200_18|error {
+    resource isolated function get meetings/[int meetingId]/registrants/questions(map<string|string[]> headers = {}) returns InlineResponse20018|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/registrants/questions`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -766,7 +766,7 @@ public isolated client class Client {
     # When storing this value in your database, store it as a long-format integer and **not** a simple integer. Meeting IDs can be more than 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`     Meeting survey object returned. 
-    resource isolated function get meetings/[int meetingId]/survey(map<string|string[]> headers = {}) returns Meeting\ Survey\ Object|error {
+    resource isolated function get meetings/[int meetingId]/survey(map<string|string[]> headers = {}) returns MeetingSurveyObject|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/survey`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -783,7 +783,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Meeting token returned. 
-    resource isolated function get meetings/[int meetingId]/token(map<string|string[]> headers = {}, *MeetingTokenQueries queries) returns inline_response_200_20|error {
+    resource isolated function get meetings/[int meetingId]/token(map<string|string[]> headers = {}, *MeetingTokenQueries queries) returns InlineResponse20020|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/token`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -799,7 +799,7 @@ public isolated client class Client {
     # + meetingId - Unique identifier of the meeting.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   Live Stream details returned. 
-    resource isolated function get meetings/[string meetingId]/livestream(map<string|string[]> headers = {}) returns inline_response_200_16|error {
+    resource isolated function get meetings/[string meetingId]/livestream(map<string|string[]> headers = {}) returns InlineResponse20016|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/livestream`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -814,7 +814,7 @@ public isolated client class Client {
     # + meetingId - The meeting's universally unique ID (UUID). When you provide a meeting UUID that begins with a `/` character or contains the `//` characters, you **must** double-encode the meeting UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`Meeting Poll object returned. 
-    resource isolated function get meetings/[string meetingId]/meeting_summary(map<string|string[]> headers = {}) returns inline_response_200_51|error {
+    resource isolated function get meetings/[string meetingId]/meeting_summary(map<string|string[]> headers = {}) returns InlineResponse20051|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/meeting_summary`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -832,7 +832,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Recording object returned.  **Error Code:** `200`    You do not have the right permissions. 
-    resource isolated function get meetings/[string meetingId]/recordings(map<string|string[]> headers = {}, *RecordingGetQueries queries) returns inline_response_200_3|error {
+    resource isolated function get meetings/[string meetingId]/recordings(map<string|string[]> headers = {}, *RecordingGetQueries queries) returns InlineResponse2003|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -843,15 +843,15 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
-    # Get Meeting Recording's Analytics Details
+    # Get a meeting or webinar recording's analytics details
     #
-    # + meetingId - To get Cloud Recordings of a meeting, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID,the response will be for the latest meeting instance. 
-    # To get Cloud Recordings of a webinar, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID,the response will be for the latest webinar instance. 
-    # If a UUID starts with &quot;/&quot; or contains &quot;//&quot; (example: &quot;/ajXp112QmuoKj4854875==&quot;), you must **[double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid)** the UUID before making an API request. 
+    # + meetingId - To get a meeting's cloud recordings, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID, the response will be for the latest meeting instance. 
+    # To get a webinar's cloud recordings, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID, the response will be for the latest webinar instance. 
+    # If a UUID starts with `/` or contains `//`, like `/ajXp112QmuoKj4854875==`, you must **double encode** the UUID before making an API request. 
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Analytics Detail listed successfully. 
-    resource isolated function get meetings/[string meetingId]/recordings/analytics_details(map<string|string[]> headers = {}, *Analytics_detailsQueries queries) returns inline_response_200_4|error {
+    resource isolated function get meetings/[string meetingId]/recordings/analytics_details(map<string|string[]> headers = {}, *Analytics_detailsQueries queries) returns InlineResponse2004|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings/analytics_details`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -862,15 +862,15 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
-    # Get Meeting Recording's Analytics Summary
+    # Get a meeting or webinar recording's analytics summary
     #
-    # + meetingId - To get Cloud Recordings of a meeting, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID,the response will be for the latest meeting instance. 
-    # To get Cloud Recordings of a webinar, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID,the response will be for the latest webinar instance. 
-    # If a UUID starts with &quot;/&quot; or contains &quot;//&quot; (example: &quot;/ajXp112QmuoKj4854875==&quot;), you must **[double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid)** the UUID before making an API request. 
+    # + meetingId - To get a meeting's cloud recordings, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID, the response will be for the latest meeting instance. 
+    # To get a webinar's cloud recordings, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID, the response will be for the latest webinar instance. 
+    # If a UUID starts with `/` or contains `//`, like `/ajXp112QmuoKj4854875==`, you must **double encode** the UUID before making an API request. 
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Analytics Summary listed successfully. 
-    resource isolated function get meetings/[string meetingId]/recordings/analytics_summary(map<string|string[]> headers = {}, *Analytics_summaryQueries queries) returns inline_response_200_5|error {
+    resource isolated function get meetings/[string meetingId]/recordings/analytics_summary(map<string|string[]> headers = {}, *Analytics_summaryQueries queries) returns InlineResponse2005|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings/analytics_summary`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -883,12 +883,12 @@ public isolated client class Client {
 
     # Get registration questions
     #
-    # + meetingId - To get Cloud Recordings of a meeting, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID,the response will be for the latest meeting instance. 
-    # To get Cloud Recordings of a webinar, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID,the response will be for the latest webinar instance. 
-    # If a UUID starts with &quot;/&quot; or contains &quot;//&quot; (example: &quot;/ajXp112QmuoKj4854875==&quot;), you must **[double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid)** the UUID before making an API request. 
+    # + meetingId - To get a meeting's cloud recordings, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID, the response will be for the latest meeting instance. 
+    # To get a webinar's cloud recordings, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID, the response will be for the latest webinar instance. 
+    # If a UUID starts with `/` or contains `//`, like `/ajXp112QmuoKj4854875==`, you must **double encode** the UUID before making an API request. 
     # + headers - Headers to be sent with the request 
-    # + return - **HTTP Status Code:** `200`   Recording Registrant Question object returned. 
-    resource isolated function get meetings/[string meetingId]/recordings/registrants/questions(map<string|string[]> headers = {}) returns Recording\ Registrant\ Questions|error {
+    # + return - **HTTP Status Code:** `200`   Recording registrant question object returned. 
+    resource isolated function get meetings/[string meetingId]/recordings/registrants/questions(map<string|string[]> headers = {}) returns RecordingRegistrantQuestions|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings/registrants/questions`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -906,7 +906,7 @@ public isolated client class Client {
     # If a UUID starts with `/` or contains `//` (example: `/ajXp112QmuoKj4854875==`), you must **double encode** the UUID before making an API request. 
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Meeting recording settings returned. 
-    resource isolated function get meetings/[string meetingId]/recordings/settings(map<string|string[]> headers = {}) returns Recording\ settings|error {
+    resource isolated function get meetings/[string meetingId]/recordings/settings(map<string|string[]> headers = {}) returns RecordingSettings|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings/settings`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -921,28 +921,13 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200` Successfully listed meeting summaries of an account. 
-    resource isolated function get meetings/meeting_summaries(map<string|string[]> headers = {}, *ListmeetingsummariesQueries queries) returns inline_response_200_11|error {
+    resource isolated function get meetings/meeting_summaries(map<string|string[]> headers = {}, *ListmeetingsummariesQueries queries) returns InlineResponse20011|error {
         string resourcePath = string `/meetings/meeting_summaries`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
         }
         resourcePath = resourcePath + check getPathForQueryParam(queries);
-        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
-        return self.clientEp->get(resourcePath, httpHeaders);
-    }
-
-    # List past meeting instances
-    #
-    # + meetingId - The past meeting's ID.
-    # + headers - Headers to be sent with the request 
-    # + return - **HTTP Status Code:** `200`     List of ended meeting instances returned. 
-    resource isolated function get past_meetings/[int meetingId]/instances(map<string|string[]> headers = {}) returns Meeting\ instances|error {
-        string resourcePath = string `/past_meetings/${getEncodedUri(meetingId)}/instances`;
-        map<anydata> headerValues = {...headers};
-        if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
-        }
         map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
         return self.clientEp->get(resourcePath, httpHeaders);
     }
@@ -954,8 +939,23 @@ public isolated client class Client {
     # * If you provide a meeting UUID that begins with a `/` character or contains the `//` characters, you **must** [double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid) the meeting UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Meeting information returned. 
-    resource isolated function get past_meetings/[meetingId meetingId](map<string|string[]> headers = {}) returns inline_response_200_21|error {
+    resource isolated function get past_meetings/[MeetingId meetingId](map<string|string[]> headers = {}) returns InlineResponse20021|error {
         string resourcePath = string `/past_meetings/${getEncodedUri(meetingId)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # List past meeting instances
+    #
+    # + meetingId - The past meeting's ID.
+    # + headers - Headers to be sent with the request 
+    # + return - **HTTP Status Code:** `200`     List of ended meeting instances returned. 
+    resource isolated function get past_meetings/[int meetingId]/instances(map<string|string[]> headers = {}) returns MeetingInstances|error {
+        string resourcePath = string `/past_meetings/${getEncodedUri(meetingId)}/instances`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
@@ -972,7 +972,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Meeting participants' report returned. 
-    resource isolated function get past_meetings/[string meetingId]/participants(map<string|string[]> headers = {}, *PastMeetingParticipantsQueries queries) returns inline_response_200_22|error {
+    resource isolated function get past_meetings/[string meetingId]/participants(map<string|string[]> headers = {}, *PastMeetingParticipantsQueries queries) returns InlineResponse20022|error {
         string resourcePath = string `/past_meetings/${getEncodedUri(meetingId)}/participants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -990,7 +990,7 @@ public isolated client class Client {
     # * If you provide a meeting UUID that begins with a `/` character or contains the `//` characters, you **must** double-encode the meeting UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   Polls returned successfully. 
-    resource isolated function get past_meetings/[string meetingId]/polls(map<string|string[]> headers = {}) returns inline_response_200_23|error {
+    resource isolated function get past_meetings/[string meetingId]/polls(map<string|string[]> headers = {}) returns InlineResponse20023|error {
         string resourcePath = string `/past_meetings/${getEncodedUri(meetingId)}/polls`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1007,7 +1007,7 @@ public isolated client class Client {
     # * If you provide a meeting UUID that begins with a `/` character or contains the `//` characters, you **must** double-encode the meeting UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   Q&amp;A returned successfully. 
-    resource isolated function get past_meetings/[string meetingId]/qa(map<string|string[]> headers = {}) returns inline_response_200_24|error {
+    resource isolated function get past_meetings/[string meetingId]/qa(map<string|string[]> headers = {}) returns InlineResponse20024|error {
         string resourcePath = string `/past_meetings/${getEncodedUri(meetingId)}/qa`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1023,7 +1023,7 @@ public isolated client class Client {
     # If the meeting UUID begins with a `/` character or contains a `//` character, you **must** [double encode](https://developers.zoom.us/docs/api/rest/using-zoom-apis/#meeting-id-and-uuid) the meeting UUID when using the meeting UUID for other API calls.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`     Meeting archived files returned. 
-    resource isolated function get past_meetings/[string meetingUUID]/archive_files(map<string|string[]> headers = {}) returns inline_response_200_2|error {
+    resource isolated function get past_meetings/[string meetingUUID]/archive_files(map<string|string[]> headers = {}) returns InlineResponse2002|error {
         string resourcePath = string `/past_meetings/${getEncodedUri(meetingUUID)}/archive_files`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1038,7 +1038,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   List of past webinar instances returned. 
-    resource isolated function get past_webinars/[int webinarId]/instances(map<string|string[]> headers = {}) returns Webinar\ instances|error {
+    resource isolated function get past_webinars/[int webinarId]/instances(map<string|string[]> headers = {}) returns WebinarInstances|error {
         string resourcePath = string `/past_webinars/${getEncodedUri(webinarId)}/instances`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1056,7 +1056,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Success.    **Error Code:** `200`   Webinar plan subscription is missing. Enable webinar for this user once the subscription is added:{userId}. 
-    resource isolated function get past_webinars/[string webinarId]/absentees(map<string|string[]> headers = {}, *WebinarAbsenteesQueries queries) returns Registration\ List_1|error {
+    resource isolated function get past_webinars/[string webinarId]/absentees(map<string|string[]> headers = {}, *WebinarAbsenteesQueries queries) returns RegistrationList1|error {
         string resourcePath = string `/past_webinars/${getEncodedUri(webinarId)}/absentees`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1075,7 +1075,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   Participants list returned. 
-    resource isolated function get past_webinars/[string webinarId]/participants(map<string|string[]> headers = {}, *ListWebinarParticipantsQueries queries) returns inline_response_200_56|error {
+    resource isolated function get past_webinars/[string webinarId]/participants(map<string|string[]> headers = {}, *ListWebinarParticipantsQueries queries) returns InlineResponse20056|error {
         string resourcePath = string `/past_webinars/${getEncodedUri(webinarId)}/participants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1093,7 +1093,7 @@ public isolated client class Client {
     # * If you provide a webinar UUID that begins with a `/` character or contains the `//` characters, you **must** [double encode](https://developers.zoom.us/docs/api/rest/using-zoom-apis/#meeting-id-and-uuid) the webinar UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   Polls returned successfully. 
-    resource isolated function get past_webinars/[string webinarId]/polls(map<string|string[]> headers = {}) returns inline_response_200_57|error {
+    resource isolated function get past_webinars/[string webinarId]/polls(map<string|string[]> headers = {}) returns InlineResponse20057|error {
         string resourcePath = string `/past_webinars/${getEncodedUri(webinarId)}/polls`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1110,7 +1110,7 @@ public isolated client class Client {
     # * If you provide a webinar UUID that begins with a `/` character or contains the `//` characters, you **must** [double encode](https://developers.zoom.us/docs/api/rest/using-zoom-apis/#meeting-id-and-uuid) the webinar UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   Q&amp;A returned successfully. 
-    resource isolated function get past_webinars/[string webinarId]/qa(map<string|string[]> headers = {}) returns inline_response_200_58|error {
+    resource isolated function get past_webinars/[string webinarId]/qa(map<string|string[]> headers = {}) returns InlineResponse20058|error {
         string resourcePath = string `/past_webinars/${getEncodedUri(webinarId)}/qa`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1125,7 +1125,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Success 
-    resource isolated function get report/activities(map<string|string[]> headers = {}, *ReportSignInSignOutActivitiesQueries queries) returns inline_response_200_29|error {
+    resource isolated function get report/activities(map<string|string[]> headers = {}, *ReportSignInSignOutActivitiesQueries queries) returns InlineResponse20029|error {
         string resourcePath = string `/report/activities`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1140,7 +1140,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   Billing report returned. 
-    resource isolated function get report/billing(map<string|string[]> headers = {}) returns inline_response_200_30|error {
+    resource isolated function get report/billing(map<string|string[]> headers = {}) returns InlineResponse20030|error {
         string resourcePath = string `/report/billing`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1155,7 +1155,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   Billing Invoice reports returned. 
-    resource isolated function get report/billing/invoices(map<string|string[]> headers = {}, *GetBillingInvoicesReportsQueries queries) returns inline_response_200_31|error {
+    resource isolated function get report/billing/invoices(map<string|string[]> headers = {}, *GetBillingInvoicesReportsQueries queries) returns InlineResponse20031|error {
         string resourcePath = string `/report/billing/invoices`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1171,7 +1171,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Cloud Recording Report Returned 
-    resource isolated function get report/cloud_recording(map<string|string[]> headers = {}, *ReportCloudRecordingQueries queries) returns inline_response_200_32|error {
+    resource isolated function get report/cloud_recording(map<string|string[]> headers = {}, *ReportCloudRecordingQueries queries) returns InlineResponse20032|error {
         string resourcePath = string `/report/cloud_recording`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1187,7 +1187,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Daily report retrieved.   This is only available for paid accounts:{accountId}. 
-    resource isolated function get report/daily(map<string|string[]> headers = {}, *ReportDailyQueries queries) returns inline_response_200_33|error {
+    resource isolated function get report/daily(map<string|string[]> headers = {}, *ReportDailyQueries queries) returns InlineResponse20033|error {
         string resourcePath = string `/report/daily`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1203,7 +1203,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`  Success. Only available for Paid or ZMP account {accountId}. 
-    resource isolated function get report/meeting_activities(map<string|string[]> headers = {}, *ReportMeetingactivitylogsQueries queries) returns inline_response_200_34|error {
+    resource isolated function get report/meeting_activities(map<string|string[]> headers = {}, *ReportMeetingactivitylogsQueries queries) returns InlineResponse20034|error {
         string resourcePath = string `/report/meeting_activities`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1221,7 +1221,7 @@ public isolated client class Client {
     # * If you provide a meeting UUID that begins with a `/` character or contains the `//` characters, you **must** [double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid) the meeting UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Meeting details returned.   This is only available for paid account. 
-    resource isolated function get report/meetings/[meetingId_1 meetingId](map<string|string[]> headers = {}) returns inline_response_200_35|error {
+    resource isolated function get report/meetings/[MeetingId1 meetingId](map<string|string[]> headers = {}) returns InlineResponse20035|error {
         string resourcePath = string `/report/meetings/${getEncodedUri(meetingId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1238,7 +1238,7 @@ public isolated client class Client {
     # * If you provide a meeting UUID that begins with a `/` character or contains the `//` characters, you **must** [double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid) the meeting UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`  * Meeting polls report returned.  * This is only available for paid account: {accountId} 
-    resource isolated function get report/meetings/[meetingId_2 meetingId]/polls(map<string|string[]> headers = {}) returns inline_response_200_37|error {
+    resource isolated function get report/meetings/[MeetingId2 meetingId]/polls(map<string|string[]> headers = {}) returns InlineResponse20037|error {
         string resourcePath = string `/report/meetings/${getEncodedUri(meetingId)}/polls`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1256,7 +1256,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Meeting participants report returned.   Only available for Paid or ZMP account: {accountId}. 
-    resource isolated function get report/meetings/[string meetingId]/participants(map<string|string[]> headers = {}, *ReportMeetingParticipantsQueries queries) returns inline_response_200_36|error {
+    resource isolated function get report/meetings/[string meetingId]/participants(map<string|string[]> headers = {}, *ReportMeetingParticipantsQueries queries) returns InlineResponse20036|error {
         string resourcePath = string `/report/meetings/${getEncodedUri(meetingId)}/participants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1274,7 +1274,7 @@ public isolated client class Client {
     # * If you provide a meeting UUID that begins with a `/` character or contains the `//` characters, you **must** double-encode the meeting UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Meeting Q&amp;A report returned.   Only available for Paid or ZMP account: {accountId}. 
-    resource isolated function get report/meetings/[string meetingId]/qa(map<string|string[]> headers = {}) returns inline_response_200_38|error {
+    resource isolated function get report/meetings/[string meetingId]/qa(map<string|string[]> headers = {}) returns InlineResponse20038|error {
         string resourcePath = string `/report/meetings/${getEncodedUri(meetingId)}/qa`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1291,7 +1291,7 @@ public isolated client class Client {
     # * If you provide a meeting UUID that begins with a `/` character or contains the `//` characters, you **must** double-encode the meeting UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Meeting survey report returned.    Only available for Paid or ZMP account: {accountId}. 
-    resource isolated function get report/meetings/[string meetingId]/survey(map<string|string[]> headers = {}) returns inline_response_200_39|error {
+    resource isolated function get report/meetings/[string meetingId]/survey(map<string|string[]> headers = {}) returns InlineResponse20039|error {
         string resourcePath = string `/report/meetings/${getEncodedUri(meetingId)}/survey`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1306,7 +1306,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Operation Logs Report Returned 
-    resource isolated function get report/operationlogs(map<string|string[]> headers = {}, *ReportOperationLogsQueries queries) returns inline_response_200_40|error {
+    resource isolated function get report/operationlogs(map<string|string[]> headers = {}, *ReportOperationLogsQueries queries) returns InlineResponse20040|error {
         string resourcePath = string `/report/operationlogs`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1322,7 +1322,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Telephone report returned.   This is only available for paid account:{accountId}.   The requested report cannot be generated for this account because this account has not subscribed to toll-free audio conference plan.   Toll Report feature must be enabled to perform this action. Contact the Zoom Support team for help. 
-    resource isolated function get report/telephone(map<string|string[]> headers = {}, *ReportTelephoneQueries queries) returns inline_response_200_41|error {
+    resource isolated function get report/telephone(map<string|string[]> headers = {}, *ReportTelephoneQueries queries) returns InlineResponse20041|error {
         string resourcePath = string `/report/telephone`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1338,7 +1338,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Upcoming events report returned.   
-    resource isolated function get report/upcoming_events(map<string|string[]> headers = {}, *ReportUpcomingEventsQueries queries) returns inline_response_200_42|error {
+    resource isolated function get report/upcoming_events(map<string|string[]> headers = {}, *ReportUpcomingEventsQueries queries) returns InlineResponse20042|error {
         string resourcePath = string `/report/upcoming_events`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1354,7 +1354,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Active or inactive hosts report returned.   Only available for Paid or ZMP account: {accountId}. 
-    resource isolated function get report/users(map<string|string[]> headers = {}, *ReportUsersQueries queries) returns inline_response_200_43|error {
+    resource isolated function get report/users(map<string|string[]> headers = {}, *ReportUsersQueries queries) returns InlineResponse20043|error {
         string resourcePath = string `/report/users`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1371,7 +1371,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Active or inactive hosts report returned.   
-    resource isolated function get report/users/[userId userId]/meetings(map<string|string[]> headers = {}, *ReportMeetingsQueries queries) returns inline_response_200_44|error {
+    resource isolated function get report/users/[UserId userId]/meetings(map<string|string[]> headers = {}, *ReportMeetingsQueries queries) returns InlineResponse20044|error {
         string resourcePath = string `/report/users/${getEncodedUri(userId)}/meetings`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1389,7 +1389,7 @@ public isolated client class Client {
     # * If you provide a webinar UUID that begins with a `/` character or contains the `//` characters, you **must** [double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid) the webinar UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Webinar details returned.   This is only available for paid account:{accountId}. 
-    resource isolated function get report/webinars/[string webinarId](map<string|string[]> headers = {}) returns inline_response_200_45|error {
+    resource isolated function get report/webinars/[string webinarId](map<string|string[]> headers = {}) returns InlineResponse20045|error {
         string resourcePath = string `/report/webinars/${getEncodedUri(webinarId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1407,7 +1407,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`  * Meeting participants report returned.   Only available for Paid or ZMP account: {accountId}. 
-    resource isolated function get report/webinars/[string webinarId]/participants(map<string|string[]> headers = {}, *ReportWebinarParticipantsQueries queries) returns inline_response_200_46|error {
+    resource isolated function get report/webinars/[string webinarId]/participants(map<string|string[]> headers = {}, *ReportWebinarParticipantsQueries queries) returns InlineResponse20046|error {
         string resourcePath = string `/report/webinars/${getEncodedUri(webinarId)}/participants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1425,7 +1425,7 @@ public isolated client class Client {
     # * If you provide a webinar UUID that begins with a `/` character or contains the `//` characters, you **must** double-encode the webinar UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Webinar polls report returned.   Missing webinar subscription plan.   Only available for Paid or ZMP account: {accountId}. 
-    resource isolated function get report/webinars/[string webinarId]/polls(map<string|string[]> headers = {}) returns inline_response_200_47|error {
+    resource isolated function get report/webinars/[string webinarId]/polls(map<string|string[]> headers = {}) returns InlineResponse20047|error {
         string resourcePath = string `/report/webinars/${getEncodedUri(webinarId)}/polls`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1442,7 +1442,7 @@ public isolated client class Client {
     # * If you provide a webinar UUID that begins with a `/` character or contains the `//` characters, you **must** double-encode the webinar UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Webinar Q&A report returned. Only available for Paid or ZMP account: {accountId}.   A report can't be generated for this account because this account is not subscribed to a webinar plan. 
-    resource isolated function get report/webinars/[string webinarId]/qa(map<string|string[]> headers = {}) returns inline_response_200_48|error {
+    resource isolated function get report/webinars/[string webinarId]/qa(map<string|string[]> headers = {}) returns InlineResponse20048|error {
         string resourcePath = string `/report/webinars/${getEncodedUri(webinarId)}/qa`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1459,7 +1459,7 @@ public isolated client class Client {
     # * If you provide a webinar UUID that begins with a `/` character or contains the `//` characters, you **must** double-encode the webinar UUID before making an API request.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Webinar survey report returned.   Missing webinar subscription plan.   Only available for Paid or ZMP account: {accountId}. 
-    resource isolated function get report/webinars/[string webinarId]/survey(map<string|string[]> headers = {}) returns inline_response_200_49|error {
+    resource isolated function get report/webinars/[string webinarId]/survey(map<string|string[]> headers = {}) returns InlineResponse20049|error {
         string resourcePath = string `/report/webinars/${getEncodedUri(webinarId)}/survey`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1474,7 +1474,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   SIP Phones listed successfully. **Error Code:** `200`   Permission missing: Enable SIP Phone Integration by contacting a Zoom Admin first. 
-    resource isolated function get sip_phones(map<string|string[]> headers = {}, *ListSipPhonesQueries queries) returns inline_response_200_50|error {
+    resource isolated function get sip_phones(map<string|string[]> headers = {}, *ListSipPhonesQueries queries) returns InlineResponse20050|error {
         string resourcePath = string `/sip_phones`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1489,7 +1489,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   List of Tracking Fields returned. 
-    resource isolated function get tracking_fields(map<string|string[]> headers = {}) returns inline_response_200_54|error {
+    resource isolated function get tracking_fields(map<string|string[]> headers = {}) returns InlineResponse20054|error {
         string resourcePath = string `/tracking_fields`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1504,7 +1504,7 @@ public isolated client class Client {
     # + fieldId - The tracking field ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Tracking field object returned 
-    resource isolated function get tracking_fields/[string fieldId](map<string|string[]> headers = {}) returns inline_response_200_55|error {
+    resource isolated function get tracking_fields/[string fieldId](map<string|string[]> headers = {}) returns InlineResponse20055|error {
         string resourcePath = string `/tracking_fields/${getEncodedUri(fieldId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1518,7 +1518,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   TSP account detail returned successfully. 
-    resource isolated function get tsp(map<string|string[]> headers = {}) returns inline_response_200_52|error {
+    resource isolated function get tsp(map<string|string[]> headers = {}) returns InlineResponse20052|error {
         string resourcePath = string `/tsp`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1528,123 +1528,12 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
-    # List meeting templates
-    #
-    # + userId - The user ID retrievable from the [List users](/api-reference/zoom-api/methods#operation/users) API.
-    # + headers - Headers to be sent with the request 
-    # + return - **HTTP Status Code:** `200` **OK**    
-    resource isolated function get users/[string userId]/meeting_templates(map<string|string[]> headers = {}) returns inline_response_200_25|error {
-        string resourcePath = string `/users/${getEncodedUri(userId)}/meeting_templates`;
-        map<anydata> headerValues = {...headers};
-        if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
-        }
-        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
-        return self.clientEp->get(resourcePath, httpHeaders);
-    }
-
-    # List meetings
-    #
-    # + userId - The user's user ID or email address. For user-level apps, pass the `me` value.
-    # + headers - Headers to be sent with the request 
-    # + queries - Queries to be sent with the request 
-    # + return - **HTTP Status Code:** `200`   List of meeting objects returned. 
-    resource isolated function get users/[string userId]/meetings(map<string|string[]> headers = {}, *MeetingsQueries queries) returns inline_response_200_26|error {
-        string resourcePath = string `/users/${getEncodedUri(userId)}/meetings`;
-        map<anydata> headerValues = {...headers};
-        if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
-        }
-        resourcePath = resourcePath + check getPathForQueryParam(queries);
-        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
-        return self.clientEp->get(resourcePath, httpHeaders);
-    }
-
-    # List a user's PAC accounts
-    #
-    # + userId - The user's user ID or email address. For user-level apps, pass the `me` value.
-    # + headers - Headers to be sent with the request 
-    # + return - **HTTP Status Code:** `200`     PAC account list returned. 
-    resource isolated function get users/[string userId]/pac(map<string|string[]> headers = {}) returns inline_response_200_28|error {
-        string resourcePath = string `/users/${getEncodedUri(userId)}/pac`;
-        map<anydata> headerValues = {...headers};
-        if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
-        }
-        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
-        return self.clientEp->get(resourcePath, httpHeaders);
-    }
-
-    # List all recordings
-    #
-    # + userId - The user's ID or email address. For user-level apps, pass the `me` value.
-    # + headers - Headers to be sent with the request 
-    # + queries - Queries to be sent with the request 
-    # + return - **HTTP Status Code:** `200`   List of recording objects returned. 
-    resource isolated function get users/[string userId]/recordings(map<string|string[]> headers = {}, *RecordingsListQueries queries) returns inline_response_200_6|error {
-        string resourcePath = string `/users/${getEncodedUri(userId)}/recordings`;
-        map<anydata> headerValues = {...headers};
-        if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
-        }
-        resourcePath = resourcePath + check getPathForQueryParam(queries);
-        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
-        return self.clientEp->get(resourcePath, httpHeaders);
-    }
-
-    # List upcoming meetings
-    #
-    # + userId - The user's user ID or email address. For user-level apps, pass [the `me` value](https://developers.zoom.us/docs/api/rest/using-zoom-apis/#the-me-keyword).
-    # + headers - Headers to be sent with the request 
-    # + return - **HTTP Status Code:** `200` List of upcoming meeting objects returned. 
-    resource isolated function get users/[string userId]/upcoming_meetings(map<string|string[]> headers = {}) returns inline_response_200_27|error {
-        string resourcePath = string `/users/${getEncodedUri(userId)}/upcoming_meetings`;
-        map<anydata> headerValues = {...headers};
-        if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
-        }
-        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
-        return self.clientEp->get(resourcePath, httpHeaders);
-    }
-
-    # List webinar templates
-    #
-    # + userId - The user's ID. To get a user's ID, use the [**List users**](/docs/api-reference/zoom-api/ma#operation/users) API. For user-level apps, pass the `me` value instead of the user ID value.
-    # + headers - Headers to be sent with the request 
-    # + return - **HTTP Status Code:** `200` **OK**  List of existing templates returned. 
-    resource isolated function get users/[string userId]/webinar_templates(map<string|string[]> headers = {}) returns inline_response_200_59|error {
-        string resourcePath = string `/users/${getEncodedUri(userId)}/webinar_templates`;
-        map<anydata> headerValues = {...headers};
-        if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
-        }
-        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
-        return self.clientEp->get(resourcePath, httpHeaders);
-    }
-
-    # List webinars
-    #
-    # + userId - The user's user ID or email address. For user-level apps, pass the `me` value.
-    # + headers - Headers to be sent with the request 
-    # + queries - Queries to be sent with the request 
-    # + return - **HTTP Status Code:** `200`   List of webinar objects returned. 
-    resource isolated function get users/[string userId]/webinars(map<string|string[]> headers = {}, *WebinarsQueries queries) returns inline_response_200_60|error {
-        string resourcePath = string `/users/${getEncodedUri(userId)}/webinars`;
-        map<anydata> headerValues = {...headers};
-        if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
-        }
-        resourcePath = resourcePath + check getPathForQueryParam(queries);
-        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
-        return self.clientEp->get(resourcePath, httpHeaders);
-    }
-
     # List user's TSP accounts
     #
     # + userId - The user ID or email address of the user. For user-level apps, pass the `me` value.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   TSP account list returned successfully. 
-    resource isolated function get users/[userId_1 userId]/tsp(map<string|string[]> headers = {}) returns inline_response_200_53|error {
+    resource isolated function get users/[UserId1 userId]/tsp(map<string|string[]> headers = {}) returns InlineResponse20053|error {
         string resourcePath = string `/users/${getEncodedUri(userId)}/tsp`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1660,7 +1549,7 @@ public isolated client class Client {
     # + tspId - TSP account ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   TSP account retrieved successfully. 
-    resource isolated function get users/[userId_3 userId]/tsp/["1"|"2" tspId](map<string|string[]> headers = {}) returns TSP\ Account|error {
+    resource isolated function get users/[UserId3 userId]/tsp/["1"|"2" tspId](map<string|string[]> headers = {}) returns TSPAccount|error {
         string resourcePath = string `/users/${getEncodedUri(userId)}/tsp/${getEncodedUri(tspId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1670,12 +1559,123 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # List meeting templates
+    #
+    # + userId - The user ID retrievable from the [List users](/api-reference/zoom-api/methods#operation/users) API.
+    # + headers - Headers to be sent with the request 
+    # + return - **HTTP Status Code:** `200` **OK**    
+    resource isolated function get users/[string userId]/meeting_templates(map<string|string[]> headers = {}) returns InlineResponse20025|error {
+        string resourcePath = string `/users/${getEncodedUri(userId)}/meeting_templates`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # List meetings
+    #
+    # + userId - The user's user ID or email address. For user-level apps, pass the `me` value.
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - **HTTP Status Code:** `200`   List of meeting objects returned. 
+    resource isolated function get users/[string userId]/meetings(map<string|string[]> headers = {}, *MeetingsQueries queries) returns InlineResponse20026|error {
+        string resourcePath = string `/users/${getEncodedUri(userId)}/meetings`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # List a user's PAC accounts
+    #
+    # + userId - The user's user ID or email address. For user-level apps, pass the `me` value.
+    # + headers - Headers to be sent with the request 
+    # + return - **HTTP Status Code:** `200`     PAC account list returned. 
+    resource isolated function get users/[string userId]/pac(map<string|string[]> headers = {}) returns InlineResponse20028|error {
+        string resourcePath = string `/users/${getEncodedUri(userId)}/pac`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # List all recordings
+    #
+    # + userId - The user's ID or email address. For user-level apps, pass the `me` value.
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - **HTTP Status Code:** `200`   List of recording objects returned. 
+    resource isolated function get users/[string userId]/recordings(map<string|string[]> headers = {}, *RecordingsListQueries queries) returns InlineResponse2006|error {
+        string resourcePath = string `/users/${getEncodedUri(userId)}/recordings`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # List upcoming meetings
+    #
+    # + userId - The user's user ID or email address. For user-level apps, pass [the `me` value](https://developers.zoom.us/docs/api/rest/using-zoom-apis/#the-me-keyword).
+    # + headers - Headers to be sent with the request 
+    # + return - **HTTP Status Code:** `200` List of upcoming meeting objects returned. 
+    resource isolated function get users/[string userId]/upcoming_meetings(map<string|string[]> headers = {}) returns InlineResponse20027|error {
+        string resourcePath = string `/users/${getEncodedUri(userId)}/upcoming_meetings`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # List webinar templates
+    #
+    # + userId - The user's ID. To get a user's ID, use the [**List users**](/docs/api-reference/zoom-api/ma#operation/users) API. For user-level apps, pass the `me` value instead of the user ID value.
+    # + headers - Headers to be sent with the request 
+    # + return - **HTTP Status Code:** `200` **OK**  List of existing templates returned. 
+    resource isolated function get users/[string userId]/webinar_templates(map<string|string[]> headers = {}) returns InlineResponse20059|error {
+        string resourcePath = string `/users/${getEncodedUri(userId)}/webinar_templates`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # List webinars
+    #
+    # + userId - The user's user ID or email address. For user-level apps, pass the `me` value.
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - **HTTP Status Code:** `200`   List of webinar objects returned. 
+    resource isolated function get users/[string userId]/webinars(map<string|string[]> headers = {}, *WebinarsQueries queries) returns InlineResponse20060|error {
+        string resourcePath = string `/users/${getEncodedUri(userId)}/webinars`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
     # Get webinar's session branding
     #
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Webinar session branding returned. 
-    resource isolated function get webinars/[int webinarId]/branding(map<string|string[]> headers = {}) returns inline_response_200_62|error {
+    resource isolated function get webinars/[int webinarId]/branding(map<string|string[]> headers = {}) returns InlineResponse20062|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/branding`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1690,7 +1690,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Webinar live streaming token returned. 
-    resource isolated function get webinars/[int webinarId]/jointoken/live_streaming(map<string|string[]> headers = {}) returns inline_response_200_63|error {
+    resource isolated function get webinars/[int webinarId]/jointoken/live_streaming(map<string|string[]> headers = {}) returns InlineResponse20063|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/jointoken/live_streaming`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1705,7 +1705,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Webinar local archiving token returned. 
-    resource isolated function get webinars/[int webinarId]/jointoken/local_archiving(map<string|string[]> headers = {}) returns inline_response_200_64|error {
+    resource isolated function get webinars/[int webinarId]/jointoken/local_archiving(map<string|string[]> headers = {}) returns InlineResponse20064|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/jointoken/local_archiving`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1720,7 +1720,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Webinar local recording token returned. 
-    resource isolated function get webinars/[int webinarId]/jointoken/local_recording(map<string|string[]> headers = {}) returns inline_response_200_65|error {
+    resource isolated function get webinars/[int webinarId]/jointoken/local_recording(map<string|string[]> headers = {}) returns InlineResponse20065|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/jointoken/local_recording`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1735,7 +1735,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Webinar plan subscription missing. Enable webinar for this user once the subscription is added. 
-    resource isolated function get webinars/[int webinarId]/panelists(map<string|string[]> headers = {}) returns inline_response_200_67|error {
+    resource isolated function get webinars/[int webinarId]/panelists(map<string|string[]> headers = {}) returns InlineResponse20067|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/panelists`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1751,7 +1751,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   List polls of a Webinar  returned 
-    resource isolated function get webinars/[int webinarId]/polls(map<string|string[]> headers = {}, *WebinarPollsQueries queries) returns Poll\ List_1|error {
+    resource isolated function get webinars/[int webinarId]/polls(map<string|string[]> headers = {}, *WebinarPollsQueries queries) returns PollList1|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/polls`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1768,7 +1768,7 @@ public isolated client class Client {
     # + pollId - The poll ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Webinar Poll object returned 
-    resource isolated function get webinars/[int webinarId]/polls/[string pollId](map<string|string[]> headers = {}) returns inline_response_200_68|error {
+    resource isolated function get webinars/[int webinarId]/polls/[string pollId](map<string|string[]> headers = {}) returns InlineResponse20068|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/polls/${getEncodedUri(pollId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1784,7 +1784,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Webinar plan subscription is missing. Enable webinar for this user once the subscription is added:{userId}. 
-    resource isolated function get webinars/[int webinarId]/registrants(map<string|string[]> headers = {}, *WebinarRegistrantsQueries queries) returns Registration\ list|error {
+    resource isolated function get webinars/[int webinarId]/registrants(map<string|string[]> headers = {}, *WebinarRegistrantsQueries queries) returns RegistrationList2|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/registrants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1802,7 +1802,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Success. 
-    resource isolated function get webinars/[int webinarId]/registrants/[string registrantId](map<string|string[]> headers = {}, *WebinarRegistrantGetQueries queries) returns Webinar\ Registrant|error {
+    resource isolated function get webinars/[int webinarId]/registrants/[string registrantId](map<string|string[]> headers = {}, *WebinarRegistrantGetQueries queries) returns WebinarRegistrant|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/registrants/${getEncodedUri(registrantId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1818,7 +1818,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Webinar registrant question object returned. 
-    resource isolated function get webinars/[int webinarId]/registrants/questions(map<string|string[]> headers = {}) returns inline_response_200_69|error {
+    resource isolated function get webinars/[int webinarId]/registrants/questions(map<string|string[]> headers = {}) returns InlineResponse20069|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/registrants/questions`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1833,7 +1833,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`     Webinar survey object returned. 
-    resource isolated function get webinars/[int webinarId]/survey(map<string|string[]> headers = {}) returns Webinar\ survey\ object|error {
+    resource isolated function get webinars/[int webinarId]/survey(map<string|string[]> headers = {}) returns WebinarSurveyObject|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/survey`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1849,7 +1849,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Webinar token returned. 
-    resource isolated function get webinars/[int webinarId]/token(map<string|string[]> headers = {}, *WebinarTokenQueries queries) returns inline_response_200_70|error {
+    resource isolated function get webinars/[int webinarId]/token(map<string|string[]> headers = {}, *WebinarTokenQueries queries) returns InlineResponse20070|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/token`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1865,7 +1865,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` 
-    resource isolated function get webinars/[int webinarId]/tracking_sources(map<string|string[]> headers = {}) returns inline_response_200_71|error {
+    resource isolated function get webinars/[int webinarId]/tracking_sources(map<string|string[]> headers = {}) returns InlineResponse20071|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/tracking_sources`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1881,7 +1881,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `200`   Success 
-    resource isolated function get webinars/[string webinarId](map<string|string[]> headers = {}, *WebinarQueries queries) returns inline_response_200_61|error {
+    resource isolated function get webinars/[string webinarId](map<string|string[]> headers = {}, *WebinarQueries queries) returns InlineResponse20061|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1897,7 +1897,7 @@ public isolated client class Client {
     # + webinarId - The webinar's unique ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**   Live stream details returned. 
-    resource isolated function get webinars/[string webinarId]/livestream(map<string|string[]> headers = {}) returns inline_response_200_66|error {
+    resource isolated function get webinars/[string webinarId]/livestream(map<string|string[]> headers = {}) returns InlineResponse20066|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/livestream`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1912,7 +1912,7 @@ public isolated client class Client {
     # + fileId - Archived file ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204` <br>  auto-delete status updated   
-    resource isolated function patch archive_files/[string fileId](archive_files_fileId_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch archive_files/[string fileId](ArchiveFilesfileIdBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/archive_files/${getEncodedUri(fileId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1930,7 +1930,7 @@ public isolated client class Client {
     # + deviceId - Unique identifier of the device.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204` **No Content**  Request processed successfully. 
-    resource isolated function patch devices/[string deviceId](devices_deviceId_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch devices/[string deviceId](DevicesdeviceIdBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/devices/${getEncodedUri(deviceId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1948,8 +1948,26 @@ public isolated client class Client {
     # + deviceId - The device's unique identifier.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204` **No Content**   Request processed successfully. 
-    resource isolated function patch devices/[string deviceId]/assignment(deviceId_assignment_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch devices/[string deviceId]/assignment(DeviceIdAssignmentBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/devices/${getEncodedUri(deviceId)}/assignment`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # Update a H.323/SIP device
+    #
+    # + deviceId - The device ID.
+    # + headers - Headers to be sent with the request 
+    # + return - **HTTP Status Code:** `204`   H.323/SIP device updated. 
+    resource isolated function patch h323/devices/[string deviceId](TheH323SIPDeviceObject1 payload, map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/h323/devices/${getEncodedUri(deviceId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
@@ -1968,7 +1986,7 @@ public isolated client class Client {
     # + messageId - The live meeting chat message's unique identifier (UUID), in base64-encoded format.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204` <br>  Meeting chat message updated. 
-    resource isolated function patch live_meetings/[int meetingId]/chat/messages/[string messageId](messages_messageId_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch live_meetings/[int meetingId]/chat/messages/[string messageId](MessagesmessageIdBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/live_meetings/${getEncodedUri(meetingId)}/chat/messages/${getEncodedUri(messageId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -1986,7 +2004,7 @@ public isolated client class Client {
     # + meetingId - The live meeting's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status:** `202` **Accepted** Request processed successfully. 
-    resource isolated function patch live_meetings/[string meetingId]/events(meetingId_events_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch live_meetings/[string meetingId]/events(MeetingIdEventsBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/live_meetings/${getEncodedUri(meetingId)}/events`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2007,7 +2025,7 @@ public isolated client class Client {
     # + queries - Queries to be sent with the request 
     # + payload - Meeting 
     # + return - **HTTP Status Code:** `204`   Meeting updated. 
-    resource isolated function patch meetings/[int meetingId](meetings_meetingId_body payload, map<string|string[]> headers = {}, *MeetingUpdateQueries queries) returns http:Response|error {
+    resource isolated function patch meetings/[int meetingId](MeetingsmeetingIdBody payload, map<string|string[]> headers = {}, *MeetingUpdateQueries queries) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2028,7 +2046,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - Meeting 
     # + return - **HTTP Status Code:** `204`   Meeting livestream updated. 
-    resource isolated function patch meetings/[int meetingId]/livestream(meetingId_livestream_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch meetings/[int meetingId]/livestream(MeetingIdLivestreamBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/livestream`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2048,7 +2066,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - Meeting 
     # + return - **HTTP Status Code:** `204` <br> Meeting livestream updated. 
-    resource isolated function patch meetings/[int meetingId]/livestream/status(livestream_status_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch meetings/[int meetingId]/livestream/status(LivestreamStatusBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/livestream/status`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2068,7 +2086,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - Meeting Registrant Questions 
     # + return - **HTTP Status Code:** `204`   Meeting Registrant Questions Updated 
-    resource isolated function patch meetings/[int meetingId]/registrants/questions(registrants_questions_body_1 payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch meetings/[int meetingId]/registrants/questions(RegistrantsQuestionsBody1 payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/registrants/questions`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2087,7 +2105,7 @@ public isolated client class Client {
     # When storing this value in your database, store it as a long-format integer and **not** a simple integer. Meeting IDs can be over 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204`     Meeting survey updated. 
-    resource isolated function patch meetings/[int meetingId]/survey(Meeting\ Survey\ Object_1 payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch meetings/[int meetingId]/survey(MeetingSurveyObject1 payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/survey`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2102,13 +2120,13 @@ public isolated client class Client {
 
     # Update registration questions
     #
-    # + meetingId - To get Cloud Recordings of a meeting, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID,the response will be for the latest meeting instance. 
-    # To get Cloud Recordings of a webinar, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID,the response will be for the latest webinar instance. 
-    # If a UUID starts with &quot;/&quot; or contains &quot;//&quot; (example: &quot;/ajXp112QmuoKj4854875==&quot;), you must **[double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid)** the UUID before making an API request. 
+    # + meetingId - To get a meeting's cloud recordings, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID, the response will be for the latest meeting instance. 
+    # To get a webinar's cloud recordings, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID,the response will be for the latest webinar instance. 
+    # If a UUID starts with `/` or contains `//`, like `/ajXp112QmuoKj4854875==`, you must **double encode** the UUID before making an API request. 
     # + headers - Headers to be sent with the request 
-    # + payload - Recording Registrant Questions 
-    # + return - **HTTP Status Code:** `200`   Recording Registrant Questions Updated 
-    resource isolated function patch meetings/[string meetingId]/recordings/registrants/questions(registrants_questions_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    # + payload - Recording registrant questions. 
+    # + return - **HTTP Status Code:** `200`   Recording registrant questions updated 
+    resource isolated function patch meetings/[string meetingId]/recordings/registrants/questions(RegistrantsQuestionsBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings/registrants/questions`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2128,7 +2146,7 @@ public isolated client class Client {
     # If a UUID starts with &quot;/&quot; or contains &quot;//&quot; (example: &quot;/ajXp112QmuoKj4854875==&quot;), you must **double encode** the UUID before making an API request. 
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204`    Meeting recording setting's updated. 
-    resource isolated function patch meetings/[string meetingId]/recordings/settings(Recording\ settings_1 payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch meetings/[string meetingId]/recordings/settings(RecordingSettings1 payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings/settings`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2146,7 +2164,7 @@ public isolated client class Client {
     # + phoneId - The SIP phone ID. This can be retrieved from the List SIP phones API.
     # + headers - Headers to be sent with the request 
     # + return - **Status Code:** `204` SIP phone updated. 
-    resource isolated function patch sip_phones/[string phoneId](sip_phones_phoneId_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch sip_phones/[string phoneId](SipPhonesphoneIdBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/sip_phones/${getEncodedUri(phoneId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2164,7 +2182,7 @@ public isolated client class Client {
     # + fieldId - The tracking field ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204`   Tracking field updated 
-    resource isolated function patch tracking_fields/[string fieldId](Tracking\ field payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch tracking_fields/[string fieldId](TrackingField1 payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/tracking_fields/${getEncodedUri(fieldId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2182,27 +2200,8 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - TSP Account 
     # + return - **HTTP Status Code:** `204` **No Content**   TSP Account updated. 
-    resource isolated function patch tsp(tsp_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch tsp(TspBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/tsp`;
-        map<anydata> headerValues = {...headers};
-        if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
-        }
-        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
-        http:Request request = new;
-        json jsonBody = payload.toJson();
-        request.setPayload(jsonBody, "application/json");
-        return self.clientEp->patch(resourcePath, request, httpHeaders);
-    }
-
-    # Set global dial-in URL for a TSP user
-    #
-    # + userId - The userId or email address of the user.
-    # + headers - Headers to be sent with the request 
-    # + payload - Global dial-in URL of the user. 
-    # + return - **Status Code:** `204` **No Content**    URL set successfully. 
-    resource isolated function patch users/[string userId]/tsp/settings(TSP\ Global\ DialIn\ URL\ Setting payload, map<string|string[]> headers = {}) returns http:Response|error {
-        string resourcePath = string `/users/${getEncodedUri(userId)}/tsp/settings`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
@@ -2221,8 +2220,27 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - TSP account. 
     # + return - **HTTP Status Code:**`204` **No Content**   TSP account updated. 
-    resource isolated function patch users/[userId_5 userId]/tsp/["1"|"2" tspId](TSP\ Account_1 payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch users/[UserId5 userId]/tsp/["1"|"2" tspId](TSPAccount1 payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/users/${getEncodedUri(userId)}/tsp/${getEncodedUri(tspId)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # Set global dial-in URL for a TSP user
+    #
+    # + userId - The userId or email address of the user.
+    # + headers - Headers to be sent with the request 
+    # + payload - Global dial-in URL of the user. 
+    # + return - **Status Code:** `204` **No Content**    URL set successfully. 
+    resource isolated function patch users/[string userId]/tsp/settings(TSPGlobalDialInURLSetting payload, map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/users/${getEncodedUri(userId)}/tsp/settings`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
@@ -2241,7 +2259,7 @@ public isolated client class Client {
     # + queries - Queries to be sent with the request 
     # + payload - Webinar. 
     # + return - **HTTP Status Code:** `204`   Webinar updated. 
-    resource isolated function patch webinars/[int webinarId](webinars_webinarId_body payload, map<string|string[]> headers = {}, *WebinarUpdateQueries queries) returns http:Response|error {
+    resource isolated function patch webinars/[int webinarId](WebinarswebinarIdBody payload, map<string|string[]> headers = {}, *WebinarUpdateQueries queries) returns http:Response|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2261,7 +2279,7 @@ public isolated client class Client {
     # + nameTagId - The name tag's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204`    * No content.  * Name tag updated. 
-    resource isolated function patch webinars/[int webinarId]/branding/name_tags/[string nameTagId](name_tags_nameTagId_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch webinars/[int webinarId]/branding/name_tags/[string nameTagId](NameTagsnameTagIdBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/branding/name_tags/${getEncodedUri(nameTagId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2298,7 +2316,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - Webinar 
     # + return - **HTTP Status Code:** `204`   Meeting live stream updated. 
-    resource isolated function patch webinars/[int webinarId]/livestream(webinarId_livestream_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch webinars/[int webinarId]/livestream(WebinarIdLivestreamBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/livestream`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2317,7 +2335,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - Webinar 
     # + return - **HTTP Status Code:** `204`    Meeting live stream updated. 
-    resource isolated function patch webinars/[int webinarId]/livestream/status(livestream_status_body_1 payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch webinars/[int webinarId]/livestream/status(LivestreamStatusBody1 payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/livestream/status`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2336,7 +2354,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - Webinar registrant questions 
     # + return - **HTTP Status Code:** `204`   Webinar registrant questions updated. 
-    resource isolated function patch webinars/[int webinarId]/registrants/questions(registrants_questions_body_2 payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch webinars/[int webinarId]/registrants/questions(RegistrantsQuestionsBody2 payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/registrants/questions`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2354,7 +2372,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204`     Webinar survey updated. 
-    resource isolated function patch webinars/[int webinarId]/survey(webinarId_survey_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function patch webinars/[int webinarId]/survey(WebinarIdSurveyBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/survey`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2371,7 +2389,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status:** `202` **Accepted** Request processed successfully. 
-    resource isolated function post devices(devices_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function post devices(DevicesBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/devices`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2388,7 +2406,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204` **No Content**   Request processed successfully. 
-    resource isolated function post devices/zpa/assignment(zpa_assignment_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function post devices/zpa/assignment(ZpaAssignmentBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/devices/zpa/assignment`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2405,8 +2423,26 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - The upgrade request has been accepted and is currently being processed. 
-    resource isolated function post devices/zpa/upgrade(zpa_upgrade_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function post devices/zpa/upgrade(ZpaUpgradeBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/devices/zpa/upgrade`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # Create a H.323/SIP device
+    #
+    # + headers - Headers to be sent with the request 
+    # + payload - H.323/SIP device. 
+    # + return - **HTTP Status Code:** `201`   H.323/SIP device created. 
+    resource isolated function post h323/devices(TheH323SIPDeviceObject payload, map<string|string[]> headers = {}) returns InlineResponse2011|error {
+        string resourcePath = string `/h323/devices`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
@@ -2424,7 +2460,7 @@ public isolated client class Client {
     # When storing this value in your database, you must store it as a long format integer and **not** an integer. Meeting IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`    Meeting invitation links created. 
-    resource isolated function post meetings/[int meetingId]/invite_links(meetingId_invite_links_body payload, map<string|string[]> headers = {}) returns inline_response_201_4|error {
+    resource isolated function post meetings/[int meetingId]/invite_links(MeetingIdInviteLinksBody payload, map<string|string[]> headers = {}) returns InlineResponse2014|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/invite_links`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2443,7 +2479,7 @@ public isolated client class Client {
     # When storing this value in your database, you must store it as a long format integer and **not** an integer. Meeting IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201` App added. 
-    resource isolated function post meetings/[int meetingId]/open_apps(map<string|string[]> headers = {}) returns inline_response_201_5|error {
+    resource isolated function post meetings/[int meetingId]/open_apps(map<string|string[]> headers = {}) returns InlineResponse2015|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/open_apps`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2461,7 +2497,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - The meeting poll object. 
     # + return - **HTTP Status Code:** `201`    Meeting Poll Created 
-    resource isolated function post meetings/[int meetingId]/polls(meetingId_polls_body payload, map<string|string[]> headers = {}) returns inline_response_201_6|error {
+    resource isolated function post meetings/[int meetingId]/polls(MeetingIdPollsBody payload, map<string|string[]> headers = {}) returns InlineResponse2016|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/polls`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2480,7 +2516,7 @@ public isolated client class Client {
     # When storing this value in your database, you must store it as a long format integer and **not** an integer. Meeting IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`    Registration submitted. 
-    resource isolated function post meetings/[int meetingId]/recordings/registrants(recordings_registrants_body payload, map<string|string[]> headers = {}) returns inline_response_201|error {
+    resource isolated function post meetings/[int meetingId]/recordings/registrants(RecordingsRegistrantsBody payload, map<string|string[]> headers = {}) returns InlineResponse201|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings/registrants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2500,7 +2536,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `201`    Meeting registration created. 
-    resource isolated function post meetings/[int meetingId]/registrants(meetingId_registrants_body payload, map<string|string[]> headers = {}, *MeetingRegistrantCreateQueries queries) returns inline_response_201_7|error {
+    resource isolated function post meetings/[int meetingId]/registrants(MeetingIdRegistrantsBody payload, map<string|string[]> headers = {}, *MeetingRegistrantCreateQueries queries) returns InlineResponse2017|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/registrants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2520,7 +2556,7 @@ public isolated client class Client {
     # When storing this value in your database, you must store it as a long format integer and **not** an integer. Meeting IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Meeting's encoded SIP URI returned. 
-    resource isolated function post meetings/[int meetingId]/sip_dialing(meetingId_sip_dialing_body payload, map<string|string[]> headers = {}) returns inline_response_200_19|error {
+    resource isolated function post meetings/[int meetingId]/sip_dialing(MeetingIdSipDialingBody payload, map<string|string[]> headers = {}) returns InlineResponse20019|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/sip_dialing`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2538,7 +2574,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - The batch meeting poll object 
     # + return - **HTTP Status Code:** `201`    Meeting Poll Created 
-    resource isolated function post meetings/[string meetingId]/batch_polls(meetingId_batch_polls_body payload, map<string|string[]> headers = {}) returns inline_response_201_2|error {
+    resource isolated function post meetings/[string meetingId]/batch_polls(MeetingIdBatchPollsBody payload, map<string|string[]> headers = {}) returns InlineResponse2012|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/batch_polls`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2556,7 +2592,7 @@ public isolated client class Client {
     # + meetingId - Unique identifier of the meeting (Meeting Number).
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**    Registrants added. 
-    resource isolated function post meetings/[string meetingId]/batch_registrants(meetingId_batch_registrants_body payload, map<string|string[]> headers = {}) returns inline_response_201_3|error {
+    resource isolated function post meetings/[string meetingId]/batch_registrants(MeetingIdBatchRegistrantsBody payload, map<string|string[]> headers = {}) returns InlineResponse2013|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/batch_registrants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2573,7 +2609,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`   SIP Phone Created. 
-    resource isolated function post sip_phones(sip_phones_body payload, map<string|string[]> headers = {}) returns inline_response_201_10|error {
+    resource isolated function post sip_phones(SipPhonesBody payload, map<string|string[]> headers = {}) returns InlineResponse20110|error {
         string resourcePath = string `/sip_phones`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2591,8 +2627,27 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - Tracking Field 
     # + return - **HTTP Status Code:** `201`   Tracking Field created 
-    resource isolated function post tracking_fields(Tracking\ Field payload, map<string|string[]> headers = {}) returns inline_response_201_12|error {
+    resource isolated function post tracking_fields(TrackingField payload, map<string|string[]> headers = {}) returns InlineResponse20112|error {
         string resourcePath = string `/tracking_fields`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # Add a user's TSP account
+    #
+    # + userId - The user ID or email address of the user. For user-level apps, pass the `me` value.
+    # + headers - Headers to be sent with the request 
+    # + payload - TSP account. 
+    # + return - **HTTP Status Code:** `201`   TSP account added. 
+    resource isolated function post users/[UserId2 userId]/tsp(TSPAccountsList payload, map<string|string[]> headers = {}) returns InlineResponse20111|error {
+        string resourcePath = string `/users/${getEncodedUri(userId)}/tsp`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
@@ -2609,7 +2664,7 @@ public isolated client class Client {
     # + userId - The user ID retrievable from the [List users](/docs/api/rest/reference/user/methods/#operation/users) API.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`   Meeting template created. 
-    resource isolated function post users/[string userId]/meeting_templates(userId_meeting_templates_body payload, map<string|string[]> headers = {}) returns inline_response_201_8|error {
+    resource isolated function post users/[string userId]/meeting_templates(UserIdMeetingTemplatesBody payload, map<string|string[]> headers = {}) returns InlineResponse2018|error {
         string resourcePath = string `/users/${getEncodedUri(userId)}/meeting_templates`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2628,7 +2683,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - Meeting object. 
     # + return - **HTTP Status Code:** `201`   Meeting created. 
-    resource isolated function post users/[string userId]/meetings(userId_meetings_body payload, map<string|string[]> headers = {}) returns inline_response_201_9|error {
+    resource isolated function post users/[string userId]/meetings(UserIdMeetingsBody payload, map<string|string[]> headers = {}) returns InlineResponse2019|error {
         string resourcePath = string `/users/${getEncodedUri(userId)}/meetings`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2646,7 +2701,7 @@ public isolated client class Client {
     # + userId - The user ID retrievable from the [List users](/api-reference/zoom-api/methods#operation/users) API.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`   Webinar template created. 
-    resource isolated function post users/[string userId]/webinar_templates(userId_webinar_templates_body payload, map<string|string[]> headers = {}) returns inline_response_201_13|error {
+    resource isolated function post users/[string userId]/webinar_templates(UserIdWebinarTemplatesBody payload, map<string|string[]> headers = {}) returns InlineResponse20113|error {
         string resourcePath = string `/users/${getEncodedUri(userId)}/webinar_templates`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2664,27 +2719,8 @@ public isolated client class Client {
     # + userId - The user ID or email address of the user. For user-level apps, pass the `me` value.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`   Webinar created. 
-    resource isolated function post users/[string userId]/webinars(userId_webinars_body payload, map<string|string[]> headers = {}) returns inline_response_201_14|error {
+    resource isolated function post users/[string userId]/webinars(UserIdWebinarsBody payload, map<string|string[]> headers = {}) returns InlineResponse20114|error {
         string resourcePath = string `/users/${getEncodedUri(userId)}/webinars`;
-        map<anydata> headerValues = {...headers};
-        if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
-        }
-        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
-        http:Request request = new;
-        json jsonBody = payload.toJson();
-        request.setPayload(jsonBody, "application/json");
-        return self.clientEp->post(resourcePath, request, httpHeaders);
-    }
-
-    # Add a user's TSP account
-    #
-    # + userId - The user ID or email address of the user. For user-level apps, pass the `me` value.
-    # + headers - Headers to be sent with the request 
-    # + payload - TSP account. 
-    # + return - **HTTP Status Code:** `201`   TSP account added. 
-    resource isolated function post users/[userId_2 userId]/tsp(TSP\ Accounts\ List payload, map<string|string[]> headers = {}) returns inline_response_201_11|error {
-        string resourcePath = string `/users/${getEncodedUri(userId)}/tsp`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
@@ -2701,7 +2737,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`    Name tag created. 
-    resource isolated function post webinars/[int webinarId]/branding/name_tags(branding_name_tags_body payload, map<string|string[]> headers = {}) returns inline_response_201_16|error {
+    resource isolated function post webinars/[int webinarId]/branding/name_tags(BrandingNameTagsBody payload, map<string|string[]> headers = {}) returns InlineResponse20116|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/branding/name_tags`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2719,7 +2755,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`    Virtual background uploaded. 
-    resource isolated function post webinars/[int webinarId]/branding/virtual_backgrounds(branding_virtual_backgrounds_body payload, map<string|string[]> headers = {}) returns inline_response_201_17|error {
+    resource isolated function post webinars/[int webinarId]/branding/virtual_backgrounds(BrandingVirtualBackgroundsBody payload, map<string|string[]> headers = {}) returns InlineResponse20117|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/branding/virtual_backgrounds`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2737,7 +2773,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`    Webinar wallpaper uploaded. 
-    resource isolated function post webinars/[int webinarId]/branding/wallpaper(branding_wallpaper_body payload, map<string|string[]> headers = {}) returns inline_response_201_18|error {
+    resource isolated function post webinars/[int webinarId]/branding/wallpaper(BrandingWallpaperBody payload, map<string|string[]> headers = {}) returns InlineResponse20118|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/branding/wallpaper`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2756,7 +2792,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - Webinar invite link object. 
     # + return - **HTTP Status Code:** `201`    Webinar Invite Links Created 
-    resource isolated function post webinars/[int webinarId]/invite_links(webinarId_invite_links_body payload, map<string|string[]> headers = {}) returns inline_response_201_4|error {
+    resource isolated function post webinars/[int webinarId]/invite_links(WebinarIdInviteLinksBody payload, map<string|string[]> headers = {}) returns InlineResponse2014|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/invite_links`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2774,7 +2810,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`   Panelist created. 
-    resource isolated function post webinars/[int webinarId]/panelists(webinarId_panelists_body payload, map<string|string[]> headers = {}) returns inline_response_201_19|error {
+    resource isolated function post webinars/[int webinarId]/panelists(WebinarIdPanelistsBody payload, map<string|string[]> headers = {}) returns InlineResponse20119|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/panelists`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2793,7 +2829,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - The Webinar poll object. 
     # + return - **HTTP Status Code:** `201`   Webinar Poll Created 
-    resource isolated function post webinars/[int webinarId]/polls(webinarId_polls_body payload, map<string|string[]> headers = {}) returns inline_response_201_20|error {
+    resource isolated function post webinars/[int webinarId]/polls(WebinarIdPollsBody payload, map<string|string[]> headers = {}) returns InlineResponse20120|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/polls`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2812,7 +2848,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `201`    Webinar registration created. 
-    resource isolated function post webinars/[int webinarId]/registrants(webinarId_registrants_body payload, map<string|string[]> headers = {}, *WebinarRegistrantCreateQueries queries) returns inline_response_201_21|error {
+    resource isolated function post webinars/[int webinarId]/registrants(WebinarIdRegistrantsBody payload, map<string|string[]> headers = {}, *WebinarRegistrantCreateQueries queries) returns InlineResponse20121|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/registrants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2832,7 +2868,7 @@ public isolated client class Client {
     # When storing this value in your database, store it as a long format integer and **not** an integer. Webinar IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `201`  Webinar's encoded SIP URI returned. 
-    resource isolated function post webinars/[int webinarId]/sip_dialing(webinarId_sip_dialing_body payload, map<string|string[]> headers = {}) returns inline_response_201_22|error {
+    resource isolated function post webinars/[int webinarId]/sip_dialing(WebinarIdSipDialingBody payload, map<string|string[]> headers = {}) returns InlineResponse20122|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/sip_dialing`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2850,7 +2886,7 @@ public isolated client class Client {
     # + webinarId - The webinar's unique identifier.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200` **OK**    Registrants added. 
-    resource isolated function post webinars/[string webinarId]/batch_registrants(webinarId_batch_registrants_body payload, map<string|string[]> headers = {}) returns inline_response_201_15|error {
+    resource isolated function post webinars/[string webinarId]/batch_registrants(WebinarIdBatchRegistrantsBody payload, map<string|string[]> headers = {}) returns InlineResponse20115|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/batch_registrants`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2871,7 +2907,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - The meeting poll. 
     # + return - **HTTP Status Code:** `204`    Meeting Poll Updated 
-    resource isolated function put meetings/[int meetingId]/polls/[string pollId](polls_pollId_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function put meetings/[int meetingId]/polls/[string pollId](PollspollIdBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/polls/${getEncodedUri(pollId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2884,13 +2920,13 @@ public isolated client class Client {
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
 
-    # Update registrant's status
+    # Update a registrant's status
     #
     # + meetingId - The meeting's ID. 
     # When storing this value in your database, you must store it as a long format integer and **not** an integer. Meeting IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204`   Registrant status updated. 
-    resource isolated function put meetings/[int meetingId]/recordings/registrants/status(registrants_status_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function put meetings/[int meetingId]/recordings/registrants/status(RegistrantsStatusBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings/registrants/status`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2910,7 +2946,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `204`   Registrant status updated. 
-    resource isolated function put meetings/[int meetingId]/registrants/status(registrants_status_body_1 payload, map<string|string[]> headers = {}, *MeetingRegistrantStatusQueries queries) returns http:Response|error {
+    resource isolated function put meetings/[int meetingId]/registrants/status(RegistrantsStatusBody1 payload, map<string|string[]> headers = {}, *MeetingRegistrantStatusQueries queries) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/registrants/status`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2930,7 +2966,7 @@ public isolated client class Client {
     # When storing this value in your database, you must store it as a long format integer and **not** an integer. Meeting IDs can exceed 10 digits.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204`   Meeting updated. 
-    resource isolated function put meetings/[int meetingId]/status(meetingId_status_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function put meetings/[int meetingId]/status(MeetingIdStatusBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/status`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2945,13 +2981,13 @@ public isolated client class Client {
 
     # Recover a single recording
     #
-    # + meetingId - To get Cloud Recordings of a meeting, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID,the response will be for the latest meeting instance. 
-    # To get Cloud Recordings of a webinar, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID,the response will be for the latest webinar instance. 
-    # If a UUID starts with &quot;/&quot; or contains &quot;//&quot; (example: &quot;/ajXp112QmuoKj4854875==&quot;), you must **[double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid)** the UUID before making an API request. 
+    # + meetingId - To get a meeting's cloud recordings, provide the meeting ID or meeting UUID. If the meeting ID is provided instead of UUID, the response will be for the latest meeting instance. 
+    # To get a webinar's cloud recordings, provide the webinar ID or the webinar UUID. If the webinar ID is provided instead of UUID, the response will be for the latest webinar instance. 
+    # If a UUID starts with `/` or contains `//`, like `/ajXp112QmuoKj4854875==`, you must **double encode** the UUID before making an API request. 
     # + recordingId - The recording ID.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `204`      Meeting recording recovered. 
-    resource isolated function put meetings/[string meetingId]/recordings/[string recordingId]/status(recordingId_status_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function put meetings/[string meetingId]/recordings/[string recordingId]/status(RecordingIdStatusBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingId)}/recordings/${getEncodedUri(recordingId)}/status`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2967,10 +3003,10 @@ public isolated client class Client {
     # Recover meeting recordings
     #
     # + meetingUUID - The meeting's universally unique identifier (UUID). Each meeting instance generates a UUID. For example, after a meeting ends, a new UUID is generated for the next meeting instance.
-    # If the meeting UUID begins with a `/` character or contains a `//` character, you **must** [double encode](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#meeting-id-and-uuid) the meeting UUID when using the meeting UUID for other API calls.
+    # If the meeting UUID begins with a `/` character or contains a `//` character, you **must** double-encode the meeting UUID when using the meeting UUID for other API calls.
     # + headers - Headers to be sent with the request 
     # + return - **HTTP Status Code:** `200`    Recordings recovered.  **Error Code:** `200`   You do not have the right permissions. 
-    resource isolated function put meetings/[string meetingUUID]/recordings/status(recordings_status_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function put meetings/[string meetingUUID]/recordings/status(RecordingsStatusBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/meetings/${getEncodedUri(meetingUUID)}/recordings/status`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -2990,7 +3026,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + payload - The webinar poll. 
     # + return - **HTTP Status Code:** `204`   Webinar Poll Updated 
-    resource isolated function put webinars/[int webinarId]/polls/[string pollId](polls_pollId_body_1 payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function put webinars/[int webinarId]/polls/[string pollId](PollspollIdBody1 payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/polls/${getEncodedUri(pollId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -3009,7 +3045,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - **HTTP Status Code:** `204` <br>  Registrant status updated. 
-    resource isolated function put webinars/[int webinarId]/registrants/status(registrants_status_body_2 payload, map<string|string[]> headers = {}, *WebinarRegistrantStatusQueries queries) returns http:Response|error {
+    resource isolated function put webinars/[int webinarId]/registrants/status(RegistrantsStatusBody2 payload, map<string|string[]> headers = {}, *WebinarRegistrantStatusQueries queries) returns http:Response|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/registrants/status`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -3028,7 +3064,7 @@ public isolated client class Client {
     # + webinarId - The webinar's ID.
     # + headers - Headers to be sent with the request 
     # + return - Webinar plan subscription is missing. Enable webinar for this user once the subscription is added: {userId}. 
-    resource isolated function put webinars/[int webinarId]/status(webinarId_status_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+    resource isolated function put webinars/[int webinarId]/status(WebinarIdStatusBody payload, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/webinars/${getEncodedUri(webinarId)}/status`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
